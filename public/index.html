@@ -10,9 +10,11 @@
   <title>Class Rec</title>
 </head>
 <body>
-
+  <h1>INDEX PAGE</h1>
   <div id="app">
-    
+    <ul>
+      <li v-for="student in students">{{ student }}</li>
+    </ul>
   </div>
 
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
