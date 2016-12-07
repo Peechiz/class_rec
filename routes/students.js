@@ -1,9 +1,10 @@
-module.exports = function(db) {
+module.exports = function(express, db) {
 
+  var router = express.Router();
 
-  app.route('/')
+  router.route('/')
     .get( (req,res) => {
-      res.send('students main');
+      res.send('["jim","susan","chet"]');
     })
     .post( (req,res) => {
       res.send('posting new student');
@@ -12,17 +13,15 @@ module.exports = function(db) {
       res.send('deleting a student')
     })
 
-
-  app.route('/:id')
+  router.route('/:id')
     .get( (req,res) => {
       res.send(`display page for ${req.params.id}`)
     })
 
-
-  app.route('/:id/edit')
+  router.route('/:id/edit')
     .get( (req,res) => {
       res.send(`editing page for ${req.params.id}`)
     })
 
-
+  return router;
 }
