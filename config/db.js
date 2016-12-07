@@ -3,5 +3,5 @@ module.exports = function (config, neo4j) {
 
   var session = driver.session();
 
-  return session();
+  return session;
 }
