@@ -11,6 +11,7 @@
   "author": "Chris Impicciche",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.16.0",
     "express": "^4.14.0",
     "neo4j-driver": "^1.1.0-M03"
   }
