@@ -14,9 +14,11 @@ var db = require('./config/db')(config, neo4j);
 var app = express();
 
 app.set('port', config.app.port);
+
+require('./config/routes')(app, config, db, express)
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./config/routes')(app, config, db)
 
 app.listen(app.get('port'), ()=>{
   console.log(`Listening on ${app.get('port')}`);
