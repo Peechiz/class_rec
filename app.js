@@ -7,7 +7,7 @@ require('dotenv').config();
 
 var env = process.env.NODE_ENV || 'dev';
 const config = require('./config/config')[env]
-console.log('Using configuration', config);
+console.log('Using configuration', env);
 
 var db = require('./config/db')(config, neo4j);
 
