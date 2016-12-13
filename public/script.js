@@ -1,20 +1,20 @@
 var app = new Vue({
   el: '#app',
   data: {
-    students: null
+    courses: null
   },
   created: function() {
-    this.fetchStudents();
+    this.fetchCourses();
   },
   computed: {},
   methods: {
-    fetchStudents: function() {
+    fetchCourses: function() {
       var xhr = new XMLHttpRequest();
       var self = this;
-      xhr.open('GET', '/students');
+      xhr.open('GET', '/courses');
       xhr.onload = function() {
-        self.students = JSON.parse(xhr.responseText);
-        console.log(self.students);
+        self.courses = JSON.parse(xhr.responseText);
+        console.log(self.courses);
       }
       xhr.send();
     }
