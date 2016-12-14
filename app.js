@@ -14,6 +14,8 @@ var db = require('./config/db')(config, neo4j);
 var app = express();
 
 app.set('port', config.app.port);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
 require('./config/routes')(app, config, db, express)
 
