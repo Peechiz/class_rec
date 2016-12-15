@@ -13,7 +13,7 @@ function getNodeByAttribute(label, attribute){
   // pass null to data_return to cancel return statement
   // (to be used with SET method)
   return function(search, data_return) {
-    var query = `MATCH (n:${label}) WHERE n.${attribute}=${search}`
+    var query = `MATCH (n:${label}) WHERE n.${attribute}='${search}'`
     if (data_return !== null){
       query += ' RETURN n'
     }
