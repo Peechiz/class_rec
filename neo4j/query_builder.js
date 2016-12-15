@@ -9,8 +9,14 @@
 
 
 function getNodeByAttribute(label, attribute){
-  return function(search) {
+
+  // pass null to data_return to cancel return statement
+  // (to be used with SET method)
+  return function(search, data_return) {
     var query = `MATCH (n:${label}) WHERE n.${attribute}=${search}`
+    if (data_return !== null){
+      query += ' RETURN n'
+    }
     return query;
   }
 }
@@ -57,6 +63,12 @@ function createRelationship(label1, attr_map1, label2, attr_map2, type) {
   return query;
 }
 
+function set(attr_map) {
+  var attr = Object.keys[0];
+  var val = attr_map[attr];
+
+  return `set n.${attr} = ${val}`;
+}
 
 
 var api = {
@@ -66,28 +78,30 @@ var api = {
   },
 
   get: {
-    ProgramByTitle : getNodeByAttribute('Program', 'title'),
-    OutcomeByName : getNodeByAttribute('Outcome', 'name'),
-    InstitutionByName : getNodeByAttribute('Institution', 'name'),
-    OfferingByName : getNodeByAttribute('Offering', 'name'),
-    PersonByName : getNodeByAttribute('Person', 'name')
+    programByTitle : getNodeByAttribute('Program', 'title'),
+    outcomeByName : getNodeByAttribute('Outcome', 'name'),
+    institutionByName : getNodeByAttribute('Institution', 'name'),
+    offeringByName : getNodeByAttribute('Offering', 'name'),
+    personByName : getNodeByAttribute('Person', 'name')
   },
 
   create: {
-    Institution : createNodeWithAttr('Institution'),
-    Program : createNodeWithAttr('Program'),
-    Outcome : createNodeWithAttr('Outcome'),
-    Offering : createNodeWithAttr('Offering'),
-    Person : createNodeWithAttr('Person')
+    institution : createNodeWithAttr('Institution'),
+    program : createNodeWithAttr('Program'),
+    outcome : createNodeWithAttr('Outcome'),
+    offering : createNodeWithAttr('Offering'),
+    person : createNodeWithAttr('Person')
   },
 
   delete: {
-    ProgramByTitle : deleteNodeByAttribute('Program', 'title'),
-    OutcomeByName : deleteNodeByAttribute('Outcome', 'name'),
-    InstitutionByName : deleteNodeByAttribute('Institution', 'name'),
-    OfferingByName : deleteNodeByAttribute('Offering', 'name'),
-    PersonByName : deleteNodeByAttribute('Person', 'name')
+    programByTitle : deleteNodeByAttribute('Program', 'title'),
+    outcomeByName : deleteNodeByAttribute('Outcome', 'name'),
+    institutionByName : deleteNodeByAttribute('Institution', 'name'),
+    offeringByName : deleteNodeByAttribute('Offering', 'name'),
+    personByName : deleteNodeByAttribute('Person', 'name')
   },
+
+  set: set,
 }
 
 module.exports = api;
