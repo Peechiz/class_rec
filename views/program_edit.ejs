@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Program</title>
+</head>
+<body>
+  <div id="app">
+
+    <h1>Program: </h1>
+
+    <h3><span v-on:click="toggle">{{ toggleLabel }} Attributes</span></h3>
+
+    <ul>
+      <li v-for="item in fields">
+        <keep-alive>
+          <component v-bind:is="currentView"
+                     v-bind:init-attr="item.attr"
+                     v-bind:init-val="item.val"></component>
+        </keep-alive>
+      </li>
+    </ul>
+    <button v-on:click="addField">Add Attribute</button>
+    <button v-on:click="submit">Submit</button>
+
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="/program.js"></script>
+</body>
+</html>
