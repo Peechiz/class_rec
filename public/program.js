@@ -3,7 +3,7 @@ Vue.component('attr-field', {
 })
 
 var attrShow = {
-  template: '<div>{{ attr }}: {{ val }}</div>',
+  template: '<div>{{ attr || "null" }}: {{ val || "null" }}</div>',
   props: ['initAttr', 'initVal'],
   data: function(){
     return { attr: this.initAttr, val: this.initVal }
@@ -14,6 +14,7 @@ var attrEdit = {
   template: '<div>\
     <input type="text" v-bind:value="attr" v-on:input="updateAttr($event.target.value)">\
     <input type="text" v-bind:value="val" v-on:input="updateVal($event.target.value)">\
+    <button @click="deleteRow">Remove</button>\
     </div>',
   props: ['initAttr','initVal', 'myIndex'],
   data: function(){
@@ -27,6 +28,9 @@ var attrEdit = {
     updateVal: function(val) {
       this.val = val;
       this.$emit('new-val', {val:this.val , index: this.myIndex})
+    },
+    deleteRow: function() {
+      this.$emit('delete-row', this.myIndex)
     }
   }
 }
@@ -35,7 +39,8 @@ var app = new Vue({
   el: '#app',
   data: {
     fields: [],
-    currentView: 'attr-show'
+    currentView: 'attr-show',
+    title: null
   },
   components: {
     "attr-show": attrShow,
@@ -43,7 +48,6 @@ var app = new Vue({
   },
   created: function() {
     this.fetchProgram();
-    console.log('page loaded');
   },
   computed: {
     toggleLabel: function() {
@@ -59,6 +63,9 @@ var app = new Vue({
         Object.keys(data.properties).forEach(key => {
           self.fields.push({attr: key, val: data.properties[key]})
         })
+        if (data.properties.title){
+          self.title = data.properties.title
+        }
       })
     },
     updateAttr: function(data){
@@ -73,6 +80,10 @@ var app = new Vue({
     addField: function() {
       this.fields.push({attr: '', val: ''});
       if (this.currentView !== 'attr-edit') this.toggle();
+    },
+    removeField:  function(index){
+      // remove from this.fields by index
+      this.fields.splice(index, 1);
     },
     submit: function(){
       this.fields.forEach(field => {

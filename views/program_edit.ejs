@@ -8,8 +8,8 @@
 </head>
 <body>
   <div id="app">
-
-    <h1>Program: </h1>
+    <a href="/program">...back</a>
+    <h1>Program: {{ title }}</h1>
 
     <h3><span v-on:click="toggle">{{ toggleLabel }} Attributes</span></h3>
 
@@ -22,7 +22,8 @@
                      v-bind:my-index="index"
                      v-on:new-attr="updateAttr"
                      v-on:new-val="updateVal"
-                     ></component>
+                     v-on:delete-row="removeField">
+          </component>
         </keep-alive>
       </li>
     </ul>
