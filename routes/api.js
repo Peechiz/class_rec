@@ -57,10 +57,5 @@ module.exports = function(express, db) {
       res.send('Oh snap you delete it')
     })
 
-  router.route('/:title/edit')
-    .get( (req,res) => {
-      res.render('program_edit')
-    })
-
   return router;
 }
