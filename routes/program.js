@@ -49,6 +49,10 @@ module.exports = function(express, db) {
             res.send(err)
           })
     })
+    .post( (req,res) => {
+      console.log(req.body);
+      res.send('RECIEVED POST REQUEST')
+    })
 
   router.route('/:title/edit')
     .get( (req,res) => {
