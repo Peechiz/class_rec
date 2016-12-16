@@ -78,6 +78,10 @@ var app = new Vue({
       this.fields.forEach(field => {
         console.log('Attr:', field.attr, ' Val:', field.val);
       })
+      var path = window.location.pathname.replace(/\/edit/,'');
+      $.post(path, {data: this.fields}, function(result) {
+        console.log(result);
+      })
     }
   }
 })
