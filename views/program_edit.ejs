@@ -14,11 +14,15 @@
     <h3><span v-on:click="toggle">{{ toggleLabel }} Attributes</span></h3>
 
     <ul>
-      <li v-for="item in fields">
+      <li v-for="(item, index) in fields">
         <keep-alive>
           <component v-bind:is="currentView"
                      v-bind:init-attr="item.attr"
-                     v-bind:init-val="item.val"></component>
+                     v-bind:init-val="item.val"
+                     v-bind:my-index="index"
+                     v-on:new-attr="updateAttr"
+                     v-on:new-val="updateVal"
+                     ></component>
         </keep-alive>
       </li>
     </ul>

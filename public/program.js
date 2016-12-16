@@ -12,12 +12,23 @@ var attrShow = {
 
 var attrEdit = {
   template: '<div>\
-    <input type="text" v-bind:value="attr" v-on:input="attr = $event.target.value">\
-    <input type="text" v-bind:value="val" v-on:input="val = $event.target.value">\
+    <input type="text" v-bind:value="attr" v-on:input="updateAttr($event.target.value)">\
+    <input type="text" v-bind:value="val" v-on:input="updateVal($event.target.value)">\
     </div>',
-  props: ['initAttr','initVal'],
+  props: ['initAttr','initVal', 'myIndex'],
   data: function(){
     return { attr: this.initAttr, val: this.initVal }
+  },
+  methods: {
+    updateAttr: function(attr) {
+      console.log(attr);
+      this.attr = attr;
+      this.$emit('new-attr', {attr:this.attr, index: this.myIndex})
+    },
+    updateVal: function(val) {
+      this.val = val;
+      this.$emit('new-val', {val:this.val , index: this.myIndex})
+    }
   }
 }
 
@@ -51,11 +62,18 @@ var app = new Vue({
         })
       })
     },
+    updateAttr: function(data){
+      this.fields[data.index].attr = data.attr;
+    },
+    updateVal: function(data){
+      this.fields[data.index].val = data.val;
+    },
     toggle: function(){
       this.currentView = this.currentView == 'attr-show' ? 'attr-edit' : 'attr-show'
     },
     addField: function() {
-      this.fields.push({attr: '', val: ''})
+      this.fields.push({attr: '', val: ''});
+      if (this.currentView !== 'attr-edit') this.toggle();
     },
     submit: function(){
       this.fields.forEach(field => {
