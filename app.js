@@ -18,12 +18,12 @@ app.set('port', config.app.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-require('./config/routes')(app, config, db, express)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+require('./config/routes')(app, config, db, express)
 
 app.listen(app.get('port'), ()=>{
   console.log(`Listening on ${app.get('port')}`);
