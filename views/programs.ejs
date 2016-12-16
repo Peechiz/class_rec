@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Programs</title>
+</head>
+<body>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Program</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach( function(program){ %>
+      <tr>
+        <td><%= program.properties.title %></td>
+        <td><a href="/program/<%= program.properties.title %>/edit">Edit</a></td>
+        <td><button type="button" name="delete">Delete</button></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  
+  <button type="button" name="button">New Program</button>
+
+  <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+  <!-- <script type="text/javascript" src="script.js"></script> -->
+</body>
+</html>
