@@ -16,9 +16,8 @@ module.exports = function(express, db) {
             data.push(record._fields[0]);
           })
           session.close()
-          // res.send(data);
           console.log(data);
-          res.render('courses', {data:data})
+          res.render('programs', {data:data})
         })
         .catch( err => {
           console.log(err);
@@ -26,18 +25,24 @@ module.exports = function(express, db) {
         })
     })
     .post( (req,res) => {
-      res.send('posting new course');
+      res.send('posting new program');
     })
     .delete( (req,res) => {
-      res.send('deleting a course')
+      res.send('deleting a program')
     })
 
   router.route('/:title')
     .get( (req,res) => {
+        // var start = new Date();
         var query = api.get.programByTitle(req.params.title)
         session.run(query)
           .then( result => {
-            res.send(result)
+            var data = result.records[0]._fields[0]
+            res.send(data)
+            session.close();
+            // var end = new Date();
+            // console.log('Process complete in: ');
+            // console.log(end - start + 'ms');
           })
           .catch( err => {
             console.log(err);
@@ -47,7 +52,7 @@ module.exports = function(express, db) {
 
   router.route('/:title/edit')
     .get( (req,res) => {
-      res.send(`editing page for ${req.params.title}`)
+      res.render('program_edit')
     })
 
   return router;
