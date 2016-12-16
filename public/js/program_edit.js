@@ -57,7 +57,7 @@ var app = new Vue({
   methods: {
     fetchProgram: function(){
       var self = this;
-      var path = window.location.pathname.replace(/\/edit/,'');
+      var path = window.location.pathname.replace(/\/edit/,'').replace(/program\//, 'api/program/');
       $.get(path, function(data){
         console.log(data);
         Object.keys(data.properties).forEach(key => {
