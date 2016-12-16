@@ -6,15 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="/site.css">
-
   <title>Class Rec</title>
+
+  <style media="screen">
+    #app {
+      display: flex;
+      justify-content: center;
+    }
+    input {
+      width: 80%;
+      border-radius: 3px;
+      border: 1px solid grey;
+      height: 2em;
+      padding: 3px;
+    }
+  </style>
 </head>
 <body>
   <h1>INDEX PAGE</h1>
   <div id="app">
-    <ul>
-      <li v-for="course in courses">{{ course.properties.title }}</li>
-    </ul>
+    <input type="text" name="" value="">
   </div>
 
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
