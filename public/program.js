@@ -6,18 +6,18 @@ var attrShow = {
   template: '<div>{{ attr }}: {{ val }}</div>',
   props: ['initAttr', 'initVal'],
   data: function(){
-    return {attr: this.initAttr, val: this.initVal}
+    return { attr: this.initAttr, val: this.initVal }
   }
 }
 
 var attrEdit = {
   template: '<div>\
-    <input type="text" v.bind:value="attr" v.on:input="attr = $event.target.value">\
-    <input type="text" v.bind:value="val" v.on:input="val = $event.target.value">\
+    <input type="text" v-bind:value="attr" v-on:input="attr = $event.target.value">\
+    <input type="text" v-bind:value="val" v-on:input="val = $event.target.value">\
     </div>',
   props: ['initAttr','initVal'],
   data: function(){
-    return {attr: this.initAttr, val: this.initVal}
+    return { attr: this.initAttr, val: this.initVal }
   }
 }
 
