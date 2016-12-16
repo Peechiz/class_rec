@@ -5,6 +5,7 @@ module.exports = function(express, db) {
   var session = db
   var router = express.Router();
 
+  // localhost:9001/api/program
   router.route('/')
     .get( (req,res) => {
       // TODO make this flexible / configurable
@@ -12,12 +13,11 @@ module.exports = function(express, db) {
         .then( result => {
           var data = [];
           result.records.forEach(record => {
-            console.log('REC:',record._fields[0]);
             data.push(record._fields[0]);
           })
           session.close()
           console.log(data);
-          res.render('programs', {data:data})
+          res.send(data)
         })
         .catch( err => {
           console.log(err);
@@ -52,6 +52,9 @@ module.exports = function(express, db) {
     .post( (req,res) => {
       console.log(req.body);
       res.send('RECIEVED POST REQUEST')
+    })
+    .delete( (req,res) => {
+      res.send('Oh snap you delete it')
     })
 
   router.route('/:title/edit')
