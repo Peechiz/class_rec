@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const neo4j = require('neo4j-driver');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -19,6 +20,8 @@ app.set('view engine', 'ejs');
 
 require('./config/routes')(app, config, db, express)
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
