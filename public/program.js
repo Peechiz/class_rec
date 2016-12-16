@@ -21,7 +21,6 @@ var attrEdit = {
   },
   methods: {
     updateAttr: function(attr) {
-      console.log(attr);
       this.attr = attr;
       this.$emit('new-attr', {attr:this.attr, index: this.myIndex})
     },
