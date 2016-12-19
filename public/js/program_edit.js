@@ -61,7 +61,11 @@ var app = new Vue({
       $.get(path, function(data){
         console.log(data);
         Object.keys(data.properties).forEach(key => {
-          self.fields.push({attr: key, val: data.properties[key]})
+          self.fields.push({
+            attr: key,
+            val: data.properties[key],
+            og: true // "original", for use with removeField() method
+          })
         })
         if (data.properties.title){
           self.title = data.properties.title
@@ -78,18 +82,41 @@ var app = new Vue({
       this.currentView = this.currentView == 'attr-show' ? 'attr-edit' : 'attr-show'
     },
     addField: function() {
-      this.fields.push({attr: '', val: ''});
+      this.fields.push({attr: '', val: '', og: false});
       if (this.currentView !== 'attr-edit') this.toggle();
     },
     removeField:  function(index){
       // remove from this.fields by index
-      this.fields.splice(index, 1);
+      var self = this;
+      if (this.fields[index].og === false){
+        this.fields.splice(index, 1);
+        this.toggle();
+      } else {
+
+        var path = window.location.pathname
+                  .replace(/\/edit/,'')
+                  .replace(/program\//, 'api/program/')
+                  + `/${this.fields[index].attr}`
+
+        $.ajax({
+          method: 'DELETE',
+          url: path,
+          success: function(data) {
+            console.log(data);
+            self.fields.splice(index, 1)
+            self.toggle();
+          }
+        })
+      }
     },
     submit: function(){
+      var payload = {};
       this.fields.forEach(field => {
         console.log('Attr:', field.attr, ' Val:', field.val);
+        payload[field.attr] = field.val;
       })
-      var path = window.location.pathname.replace(/\/edit/,'');
+      console.log(payload);
+      var path = window.location.pathname.replace(/\/edit/,'').replace(/program\//, 'api/program/');
       $.post(path, {data: this.fields}, function(result) {
         console.log(result);
       })
