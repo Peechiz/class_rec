@@ -53,8 +53,32 @@ module.exports = function(express, db) {
       console.log(req.body);
       res.send('RECIEVED POST REQUEST')
     })
+    .put( (req,res) => {
+      // update attrs
+      var query = api.get.programByTitle(req.params.title, null)
+                  + " " + api.set(req.body)
+      // TODO uncomment when ready to test for reals
+      // session.run(query)
+      //   .then(result => {
+      //     session.close()
+      //     res.send('OK')
+      //   })
+      //   .catch( err => {
+      //     console.log(err);
+      //     res.send('WHOOPS')
+      //   })
+
+      // test
+      console.log(query);
+      res.send(query)
+    })
     .delete( (req,res) => {
       res.send('Oh snap you delete it')
+    })
+
+  router.route('/:title/:attr')
+    .delete((req,res) => {
+      res.send(`Deleting ${req.params.attr} on ${req.params.title}`)
     })
 
   return router;
