@@ -64,10 +64,29 @@ function createRelationship(label1, attr_map1, label2, attr_map2, type) {
 }
 
 function set(attr_map) {
-  var attr = Object.keys[0];
-  var val = attr_map[attr];
-
-  return `set n.${attr} = ${val}`;
+  if (typeof(attr_map) != 'object') {
+    return
+  }
+  if (Object.keys(attr_map).length === 1){
+    var attr = Object.keys(attr_map)[0];
+    var val = attr_map[attr];
+    if (typeof(val) == 'string'){
+      return `SET n.${attr}="${val}"`;
+    } else {
+      return `SET n.${attr}=${val}`
+    }
+  } else {
+    var commands = [];
+    Object.keys(attr_map).forEach( key => {
+      var val = attr_map[key];
+      if (typeof(val)== 'string'){
+        commands.push(`n.${key}="${val}"`)
+      } else {
+        commands.push(`n.${key}=${val}`)
+      }
+    })
+    return 'SET ' + commands.join(', ')
+  }
 }
 
 
