@@ -111,6 +111,7 @@ var app = new Vue({
     },
     submit: function(){
       var payload = {};
+      var self = this;
       this.fields.forEach(field => {
         console.log('Attr:', field.attr, ' Val:', field.val);
         payload[field.attr] = field.val;
@@ -119,6 +120,9 @@ var app = new Vue({
       var path = window.location.pathname.replace(/\/edit/,'').replace(/program\//, 'api/program/');
       $.post(path, {data: this.fields}, function(result) {
         console.log(result);
+        if (self.currentView != 'attr-show') {
+          self.toggle();
+        }
       })
     }
   }
