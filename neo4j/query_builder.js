@@ -13,9 +13,9 @@ function getNodeByAttribute(label, attribute){
   // pass null to data_return to cancel return statement
   // (to be used with SET method)
   return function(search, data_return) {
-    var query = `MATCH (n:${label}) WHERE n.${attribute}='${search}'`
+    var query = `MATCH (n:${label}) WHERE n.${attribute}='${search}' `
     if (data_return !== null){
-      query += ' RETURN n'
+      query += 'RETURN n'
     }
     return query;
   }
@@ -89,6 +89,15 @@ function set(attr_map) {
   }
 }
 
+// to be used with a get method
+function remove(attr_array) {
+  if (!Array.isArray(attr_array)) {
+    console.log('please provide an array to remove');
+    return
+  }
+  return 'REMOVE ' + attr_array.map(x => 'n.'+x).join(', ')
+}
+
 
 var api = {
 
@@ -121,6 +130,8 @@ var api = {
   },
 
   set: set,
+
+  remove: remove
 }
 
 module.exports = api;
