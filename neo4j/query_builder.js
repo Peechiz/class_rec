@@ -25,7 +25,7 @@ function createNodeWithAttr(label) {
   return function(attr_map){
     var attrs = '';
     Object.keys(attr_map).forEach( key => {
-      attrs += `n.${key}=${attr_map[key]}`
+      attrs += `${key}:"${attr_map[key]}"`
     })
     var query = `CREATE (n:${label} {${attrs}})`
     return query;
@@ -34,7 +34,7 @@ function createNodeWithAttr(label) {
 
 function deleteNodeByAttribute(label,attribute) {
   return function(search) {
-    var query = `MATCH (n:${label}) WHERE n.${attribute}=${search} DETACH DELETE n`
+    var query = `MATCH (n:${label}) WHERE n.${attribute}="${search}" DETACH DELETE n`
     return query;
   }
 }
