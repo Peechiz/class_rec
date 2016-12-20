@@ -64,19 +64,19 @@ module.exports = function(express, db) {
       var query = api.get.programByTitle(req.params.title, null)
                   + " " + api.set(req.body)
       // TODO uncomment when ready to test for reals
-      // session.run(query)
-      //   .then(result => {
-      //     session.close()
-      //     res.send('OK')
-      //   })
-      //   .catch( err => {
-      //     console.log(err);
-      //     res.send('WHOOPS')
-      //   })
+      session.run(query)
+        .then(result => {
+          session.close()
+          res.sendStatus(200)
+        })
+        .catch( err => {
+          console.log(err);
+          res.send('WHOOPS')
+        })
 
-      // test
-      console.log(query);
-      res.send(query)
+      // // test
+      // console.log(query);
+      // res.send(query)
     })
     .delete( (req,res) => {
       var query = api.delete.programByTitle(req.params.title)
@@ -93,7 +93,18 @@ module.exports = function(express, db) {
 
   router.route('/:title/:attr')
     .delete((req,res) => {
-      res.send(`Deleting ${req.params.attr} on ${req.params.title}`)
+      console.log(`Deleting ${req.params.attr} on ${req.params.title}`)
+      
+      var query = api.get.programByTitle(req.params.title, null)
+                  + api.remove([req.params.attr])
+      session.run(query)
+        .then(result => {
+          session.close();
+          res.send(result);
+        })
+        .catch( err => {
+          console.log(err);
+        })
     })
 
   return router;

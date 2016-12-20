@@ -102,11 +102,16 @@ var app = new Vue({
           method: 'DELETE',
           url: path,
           success: function(data) {
-            console.log(data);
-            self.fields.splice(index, 1)
-            self.toggle();
+            self.refresh();
           }
         })
+      }
+    },
+    refresh: function(){
+      this.fields = [];
+      this.fetchProgram();
+      if (self.currentView != 'attr-show') {
+        this.toggle();
       }
     },
     submit: function(){
@@ -118,11 +123,14 @@ var app = new Vue({
       })
       console.log(payload);
       var path = window.location.pathname.replace(/\/edit/,'').replace(/program\//, 'api/program/');
-      $.post(path, {data: this.fields}, function(result) {
+
+      $.ajax({
+        method: 'PUT',
+        url: path,
+        data: payload
+      }).done( result => {
         console.log(result);
-        if (self.currentView != 'attr-show') {
-          self.toggle();
-        }
+        self.refresh();
       })
     }
   }
