@@ -25,10 +25,16 @@ module.exports = function(express, db) {
         })
     })
     .post( (req,res) => {
-      res.send('posting new program');
-    })
-    .delete( (req,res) => {
-      res.send('deleting a program')
+      var query = api.create.program({title: req.body.title })
+      console.log('QUERY: '+ query);
+      session.run(query)
+        .then( data => {
+          res.send('posting new program ' + req.body.title);
+          session.close();
+        })
+        .catch( err => {
+          console.log(err);
+        })
     })
 
   router.route('/:title')
@@ -73,7 +79,16 @@ module.exports = function(express, db) {
       res.send(query)
     })
     .delete( (req,res) => {
-      res.send('Oh snap you delete it')
+      var query = api.delete.programByTitle(req.params.title)
+      // console.log('QUERY: '+ query);
+      session.run(query)
+        .then( result => {
+          res.send('Oh snap you delete it')
+          session.close();
+        })
+        .catch( err => {
+          console.log(err);
+        })
     })
 
   router.route('/:title/:attr')

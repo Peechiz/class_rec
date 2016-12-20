@@ -21,13 +21,19 @@
         <tr v-for="program in programs">
           <td>{{ program.properties.title }}</td>
           <td><edit :title="program.properties.title"></edit></td>
-          <td><button @click="del">Delete</button></td>
+          <td><button @click="del(program.properties.title)">Delete</button></td>
         </tr>
 
       </tbody>
     </table>
 
-    <button type="button" name="button">New Program</button>
+    <button id="addNew" @click="addNew" type="button" name="button">{{ addProgram ? 'Cancel' : 'Add Program' }}</button>
+
+    <div v-if="addProgram">
+      <label for="">Program Title: </label>
+      <input type="text" name="" v-model="newProgram" >
+      <button @click="submitNew" type="button" name="button">Submit</button>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
